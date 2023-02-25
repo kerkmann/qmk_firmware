@@ -43,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |---------+---------+---------+---------+---------+---------| MUTE    |   | DISCORD  |---------+---------+---------+---------+---------+---------|
      * | LShift  | Z       | X       | C       | V       | B       |---------|   |----------| N       | M       | ,       | .       | /       | RShift  |
      * `-----------------------------------------------------------/        /     \          \----------------------------------------------------------'
-     *           | LCtrl   | LAlt   | Super   | Lower   |        / Space  /       \ Enter    \       | RAISE   | Backsp. | RAlt    | RCtrl   |
+     *           | LCtrl   | LAlt   | Super   | Space    |        / Lower  /       \ Raise    \       | Enter   | Backsp. | RAlt    | RCtrl   |
      *           `--------------------------------------------------------'         '---------------------------------------------------------/
      */
     [_QWERTY] = LAYOUT(
@@ -56,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // |---------+---------+---------+---------+---------+---------|=========|    |=========|---------+---------+---------+---------+---------+---------|
          KC_LSFT , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    , KC_MUTE ,     KC_D_MUTE, KC_N    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , KC_RSFT ,
     // |---------+---------+---------+---------+---------+---------|=========|    |=========|---------+---------+---------+---------+---------+---------|
-                   KC_LCTL , KC_LALT , KC_LGUI , KC_LOWER, KC_SPC  ,                          KC_ENT  , KC_RAISE, KC_BSPC , KC_RALT , KC_RCTL
+                   KC_LCTL , KC_LALT , KC_LGUI , KC_SPC  , KC_LOWER,                          KC_RAISE, KC_ENT  , KC_BSPC , KC_RALT , KC_RCTL
     //           \---------+---------+---------+---------+---------|--------/      \--------|---------+---------+--------+---------+---------/
     ),
 
@@ -111,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // |---------+-------------+-------------+-----------+-------------+---------|=========|     |=========|---------+---------+---------+---------+---------+---------|
          XXXXXXX , KC_UNDO     , KC_CUT      , KC_COPY   , KC_PASTE    , XXXXXXX , XXXXXXX ,       XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
     // |---------+-------------+-------------+-----------+-------------+---------|=========|     |=========|---------+---------+---------+---------+---------+---------|
-                   XXXXXXX     , XXXXXXX     , XXXXXXX   , _______     , XXXXXXX ,                           XXXXXXX , _______ , XXXXXXX , XXXXXXX , XXXXXXX
+                   XXXXXXX     , XXXXXXX     , XXXXXXX   , XXXXXXX     , _______ ,                           _______ , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX
     //           \-------------+-------------+-----------+-------------+---------|--------/       \--------|---------+---------+---------+---------+---------/
     ),
 
@@ -138,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // |---------+---------+---------+---------+---------+---------|=========|     |=========|---------+---------+---------+---------+---------+---------|
          XXXXXXX , XXXXXXX , RGB_SPD , RGB_SPI , XXXXXXX , XXXXXXX , XXXXXXX ,       XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
     // |---------+---------+---------+---------+---------+---------|=========|     |=========|---------+---------+---------+---------+---------+---------|
-                   XXXXXXX , XXXXXXX , XXXXXXX, XXXXXXX  , XXXXXXX ,                           XXXXXXX  , XXXXXXX  , XXXXXXX, XXXXXXX , XXXXXXX
+                   XXXXXXX , XXXXXXX , XXXXXXX, XXXXXXX  , _______ ,                           _______  , XXXXXXX  , XXXXXXX, XXXXXXX , XXXXXXX
     //           \---------+---------+---------+---------+---------|--------/       \--------|---------+---------+---------+---------+---------/
     ),
 
@@ -251,10 +251,10 @@ static void print_status_narrow(void) {
             oled_write_ln_P(PSTR("LAYER"), false);
             switch (get_highest_layer(layer_state)) {
                 case _RAISE:
-                    oled_write_ln_P(PSTR("Raise"), false);
+                    oled_write_P(PSTR("Raise"), false);
                     break;
                 case _LOWER:
-                    oled_write_ln_P(PSTR("Lower"), false);
+                    oled_write_P(PSTR("Lower"), false);
                     break;
                 case _ADJUST:
                     oled_write_ln_P(PSTR("Adj."), false);
@@ -263,7 +263,7 @@ static void print_status_narrow(void) {
                     oled_write_ln_P(PSTR("Num."), false);
                     break;
                 default:
-                    oled_write_ln_P(PSTR("Undef"), false);
+                    oled_write_ln_P(PSTR("Base"), false);
             }
 
             oled_write_P(PSTR("\n\n"), false);
