@@ -355,16 +355,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
-        if (clockwise) {
-            rgblight_decrease_val();
-        } else {
-            rgblight_increase_val();
-        }
-    } else if (index == 1) {
+        // Flip direction to fix clockwise/counterclockwise
+        clockwise = !clockwise;
         if (clockwise) {
             tap_code(KC_AUDIO_VOL_UP);
         } else {
             tap_code(KC_AUDIO_VOL_DOWN);
+        }
+    } else if (index == 1) {
+        if (clockwise) {
+            rgblight_increase_val();
+        } else {
+            rgblight_decrease_val();
         }
     }
     return true;
