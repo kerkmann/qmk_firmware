@@ -208,15 +208,13 @@ const qk_ucis_symbol_t ucis_symbol_table[] = UCIS_TABLE(UCIS_SYM("poop", 0x1F4A9
 #endif
 
 #ifdef COMBO_ENABLE
-enum combo_events { EM_EMAIL, BSPC_LSFT_CLEAR, COMBO_LENGTH };
-uint16_t COMBO_LEN = COMBO_LENGTH; // remove the COMBO_COUNT define and use this instead!
+enum combo_events { EM_EMAIL, COMBO_LENGTH };
+uint16_t COMBO_LEN = COMBO_LENGTH;
 
-const uint16_t PROGMEM email_combo[]      = {KC_E, KC_M, COMBO_END};
-const uint16_t PROGMEM clear_line_combo[] = {KC_BSPC, KC_LSFT, COMBO_END};
+const uint16_t PROGMEM email_combo[] = {KC_E, KC_M, COMBO_END};
 
 combo_t key_combos[] = {
-    [EM_EMAIL]        = COMBO_ACTION(email_combo),
-    [BSPC_LSFT_CLEAR] = COMBO_ACTION(clear_line_combo),
+    [EM_EMAIL] = COMBO_ACTION(email_combo),
 };
 /* COMBO_ACTION(x) is same as COMBO(x, KC_NO) */
 
@@ -227,23 +225,12 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
                 SEND_STRING("john.doe@example.com");
             }
             break;
-        case BSPC_LSFT_CLEAR:
-            if (pressed) {
-                tap_code16(KC_END);
-                tap_code16(S(KC_HOME));
-                tap_code16(KC_BSPC);
-            }
-            break;
     }
 }
-
 #endif
 
 #ifdef RGBLIGHT_ENABLE
 void keyboard_post_init_user(void) {
-    // Enable the LED layers
-    // rgblight_layers = my_rgb_layers;
-
     rgb_matrix_disable();
     rgb_matrix_set_speed(10);
     rgb_matrix_enable();
@@ -254,7 +241,6 @@ void keyboard_post_init_user(void) {
 #endif
 
 #ifdef OLED_ENABLE
-
 static void render_logo(void) {
     static const char PROGMEM qmk_logo[] = {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F, 0x90, 0x91, 0x92, 0x93, 0x94, 0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, 0xB0, 0xB1, 0xB2, 0xB3, 0xB4, 0xC0, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xC8, 0xC9, 0xCA, 0xCB, 0xCC, 0xCD, 0xCE, 0xCF, 0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0x00};
 
@@ -329,7 +315,6 @@ bool oled_task_user(void) {
     }
     return false;
 }
-
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
