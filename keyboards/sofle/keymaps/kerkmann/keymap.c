@@ -30,6 +30,10 @@ enum sofle_layers { _QWERTY = 0, _LOWER, _RAISE, _ADJUST, _NUMPAD };
 
 enum custom_keycodes { KC_LOWER, KC_RAISE, KC_D_MUTE };
 
+enum {
+    TD_MOD,
+};
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
@@ -56,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // |---------+---------+---------+---------+---------+---------|=========|    |=========|---------+---------+---------+---------+---------+---------|
          KC_LCTL , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    , KC_MUTE ,      XXXXXXX , KC_N    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , KC_RCTL ,
     // |---------+---------+---------+---------+---------+---------|=========|    |=========|---------+---------+---------+---------+---------+---------|
-                   KC_PGDN , KC_LALT , KC_SPC  , KC_LOWER, KC_LGUI ,                          KC_ENT  , KC_RAISE, KC_BSPC , KC_RALT , KC_PGUP
+                   KC_PGDN , KC_LALT , KC_SPC  , KC_LOWER,TD(TD_MOD),                          KC_ENT  , KC_RAISE, KC_BSPC , KC_RALT , KC_PGUP
     //           \---------+---------+---------+---------+---------|--------/      \--------|---------+---------+--------+---------+---------/
     ),
 
@@ -198,6 +202,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     */
 };
 // clang-format on
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_MOD] = ACTION_TAP_DANCE_DOUBLE(KC_LGUI, LSFT(KC_ENT)),
+};
 
 #ifdef UCIS_ENABLE
 const qk_ucis_symbol_t ucis_symbol_table[] = UCIS_TABLE(UCIS_SYM("poop", 0x1F4A9),               // 💩
@@ -371,5 +379,4 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     }
     return true;
 }
-
 #endif
