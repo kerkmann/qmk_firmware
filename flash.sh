@@ -17,3 +17,5 @@ done
 
 sudo cp sofle_rev1_kerkmann_kb2040.uf2 /tmp/flash
 sudo umount /tmp/flash
+
+du -hs sofle_rev1_kerkmann_kb2040.uf2
