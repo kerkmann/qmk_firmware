@@ -3,7 +3,7 @@
 #include QMK_KEYBOARD_H
 
 enum custom_layers { _QWERTY = 0, _LOWER, _RAISE, _ADJUST, _NUMPAD };
-enum custom_keycodes { KC_LOWER, KC_RAISE, KC_D_MUTE };
+enum custom_keycodes { KC_LOWER, KC_RAISE, KC_D_MUTE, KC_T_AS };
 
 #ifdef TAP_DANCE_ENABLE
 #    include "tap_dance.c"
@@ -98,7 +98,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * .---------------------------------------------------------------.                         .-----------------------------------------------------------.
      * |         |         |         | RGB Hue-  | RGB Hue+  |         |                         | NUMPAD  |         |         |         |         |         |
      * |---------+---------+---------+-----------+-----------+---------|                         |---------+---------+---------+---------+---------+---------|
-     * |         |         |         | RGB Sat-  | RGB Sat+  |         |                         |         |         |         |         |         |         |
+     * |         |         |         | RGB Sat-  | RGB Sat+  |         |                         |AUTOSHIFT|         |         |         |         |         |
      * |---------+---------+---------+-----------+-----------+---------|                         |---------+---------+---------+---------+---------+---------|
      * |         |         | RGB Prev| RGB Value-| RGB Value+| RGB Next|----------.   ,----------|         |         |         |         |         |         |
      * |---------+---------+---------+-----------+-----------+---------|          |   |          |---------+---------+---------+---------+---------+---------|
@@ -111,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // .---------------------------------------------------------------.                         .-----------------------------------------------------------.
          XXXXXXX , XXXXXXX , XXXXXXX , RGB_HUD   , RGB_HUI   , XXXXXXX ,                           KC_NUM  , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
     // |---------+---------+---------+-----------+-----------+---------|                         |---------+---------+---------+---------+---------+---------|
-         XXXXXXX , XXXXXXX , XXXXXXX , RGB_SAD   , RGB_SAI   , XXXXXXX ,                           XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+         XXXXXXX , XXXXXXX , XXXXXXX , RGB_SAD   , RGB_SAI   , XXXXXXX ,                           KC_T_AS , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
     // |---------+---------+---------+-----------+-----------+---------|                         |---------+---------+---------+---------+---------+---------|
          XXXXXXX , XXXXXXX , RGB_RMOD, RGB_VAD   , RGB_VAI   , RGB_MOD ,                           XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
     // |---------+---------+---------+-----------+-----------+---------|=========|     |=========|---------+---------+---------+---------+---------+---------|
@@ -178,7 +178,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     switch (keycode) {
         case KC_LOWER: {
@@ -209,7 +208,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 unregister_mods(mod_config(MOD_MEH));
                 unregister_code(KC_UP);
             }
+            return false;
         }
+#ifdef AUTO_SHIFT_ENABLE
+        case KC_T_AS: {
+            if (!record->event.pressed) {
+                autoshift_toggle();
+            }
+            return false;
+        }
+#endif
     }
     return true;
 }
