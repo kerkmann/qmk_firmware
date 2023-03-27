@@ -1,4 +1,14 @@
+#include <stdbool.h>
+#include <stdio.h>
+
+#include "oled_driver.h"
+#include "process_auto_shift.h"
+#include "quantum_keycodes.h"
+#include "rgb_matrix.h"
+#include "wpm.h"
+
 #include "bongo.h"
+#include "keymap.h"
 
 static void print_status_narrow(void) {
     oled_write_P(PSTR("LAYER"), false);
@@ -55,11 +65,11 @@ static void print_settings_master(void) {
 static void print_settings_slave(void) {
     oled_write_ln_P(PSTR("NUM"), false);
     oled_write_ln_P(PSTR("???"), false);
-    //if (get_num_state()) {
-    //    oled_write_ln_P(PSTR("ON "), false);
-    //} else {
-    //    oled_write_ln_P(PSTR("OFF"), false);
-    //}
+    // if (get_num_state()) {
+    //     oled_write_ln_P(PSTR("ON "), false);
+    // } else {
+    //     oled_write_ln_P(PSTR("OFF"), false);
+    // }
 
     oled_write_P(PSTR("\n\n"), false);
 
@@ -100,5 +110,3 @@ bool oled_task_user(void) {
     }
     return false;
 }
-
-

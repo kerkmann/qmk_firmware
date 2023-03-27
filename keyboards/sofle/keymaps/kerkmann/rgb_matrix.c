@@ -1,3 +1,5 @@
+#include "rgb_matrix.h"
+
 void keyboard_post_init_user(void) {
     rgb_matrix_disable();
     rgb_matrix_set_speed(10);

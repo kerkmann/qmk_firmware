@@ -1,3 +1,14 @@
+#pragma once
+
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
+
+#include "oled_driver.h"
+#include "sync_timer.h"
+#include "time.h"
+#include "matrix.h"
+
 // Copyright to pedker, see: https://github.com/pedker/OLED-BongoCat-Revision
 
 #define ANIM_FRAME_DURATION 75

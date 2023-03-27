@@ -1,3 +1,5 @@
+#include "process_combo.h"
+
 enum combo_events { EM_EMAIL, COMBO_LENGTH };
 // TODO: Do I really need that part?
 //uint16_t COMBO_LEN = COMBO_LENGTH;

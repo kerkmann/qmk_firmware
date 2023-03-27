@@ -1,3 +1,5 @@
+#include "process_ucis.h"
+
 // clang-format off
 const ucis_symbol_t ucis_symbol_table[] = UCIS_TABLE(
     UCIS_SYM("poop", 0x1F4A9),               // 💩
