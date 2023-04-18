@@ -4,8 +4,14 @@
 
 #include "process_tap_dance.h"
 
+#ifdef COMBO_ENABLE
+#    include "combo.h"
+#endif
 #ifdef TAP_DANCE_ENABLE
 #    include "tap_dance.h"
+#endif
+#ifdef UCIS_ENABLE
+#    include "ucis.h"
 #endif
 
 // clang-format off
@@ -21,7 +27,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * |---------+---------+---------+---------+---------+---------| MUTE    |   |Play/Pause|---------+---------+---------+---------+---------+---------|
      * | LShift  | Z       | X       | C       | V       | B       |---------|   |----------| N       | M       | , <     | . >     | / ?     | RShift  |
      * `-----------------------------------------------------------/        /     \          \----------------------------------------------------------'
-     *           | PDown   | LAlt   | Space    | Lower   |        / Super  /       \ Enter    \       | Raise   | Backsp. | RAlt    | PUP     |
+     *           | PUp     | LAlt   | Space    | Lower   |        / Super  /       \ Enter    \       | Raise   | Backsp. | RAlt    | PDown   |
      *           `--------------------------------------------------------'         '---------------------------------------------------------/
      */
     [_QWERTY] = LAYOUT(
@@ -34,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // |---------+---------+---------+---------+---------+---------|=========|    |=========|---------+---------+---------+---------+---------+---------|
          KC_LSFT , KC_Z    , KC_X    , KC_C    , KC_V    , KC_B    , KC_MUTE ,      KC_MPLY , KC_N    , KC_M    , KC_COMM , KC_DOT  , KC_SLSH , KC_RSFT ,
     // |---------+---------+---------+---------+---------+---------|=========|    |=========|---------+---------+---------+---------+---------+---------|
-                   KC_PGDN , KC_LALT , KC_SPC  , KC_LOWER,TD(TD_MOD),                         KC_ENT  , KC_RAISE, KC_BSPC , KC_RALT , KC_PGUP
+                TD(TD_PGUP), KC_LALT , KC_SPC  , KC_LOWER,TD(TD_MOD),                         KC_ENT  , KC_RAISE, KC_BSPC , KC_RALT , TD(TD_PGDN)
     //           \---------+---------+---------+---------+---------|--------/      \--------|---------+---------+--------+---------+---------/
     ),
 
@@ -56,11 +62,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // .-----------------------------------------------------------.                         .-----------------------------------------------------------.
          XXXXXXX , KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_F5   ,                           KC_F6   , KC_F7   , KC_F8   , KC_F9   , KC_F10  , XXXXXXX ,
     // |---------+---------+---------+---------+---------+---------|                         |---------+---------+---------+---------+---------+---------|
-         XXXXXXX , KC_EXLM , KC_AT   , KC_HASH , KC_DLR  , KC_PERC , XXXXXXX ,       XXXXXXX , KC_CIRC , KC_AMPR , KC_ASTR , KC_LPRN , KC_RPRN , XXXXXXX ,
+         XXXXXXX , KC_EXLM , KC_AT   , KC_HASH , KC_DLR  , KC_PERC ,                           KC_CIRC , KC_AMPR , KC_ASTR , KC_LPRN , KC_RPRN , XXXXXXX ,
     // |---------+---------+---------+---------+---------+---------|                         |---------+---------+---------+---------+---------+---------|
          XXXXXXX , KC_LT   , KC_LBRC , KC_LCBR , KC_LPRN , KC_UNDS ,                           KC_EQL  , KC_RPRN , KC_RCBR , KC_RBRC , KC_GT   , XXXXXXX ,
     // |---------+---------+---------+---------+---------+---------|=========|     |=========|---------+---------+---------+---------+---------+---------|
-         XXXXXXX , XXXXXXX , XXXXXXX , KC_SLSH , KC_TILD , KC_MINS ,                           KC_PLUS , KC_GRV  , KC_BSLS , XXXXXXX , XXXXXXX , XXXXXXX ,
+         XXXXXXX , XXXXXXX , XXXXXXX , KC_SLSH , KC_TILD , KC_MINS , XXXXXXX ,       XXXXXXX , KC_PLUS , KC_GRV  , KC_BSLS , XXXXXXX , XXXXXXX , XXXXXXX ,
     // |---------+---------+---------+---------+---------+---------|=========|     |=========|---------+---------+---------+---------+---------+---------|
                    XXXXXXX , XXXXXXX , XXXXXXX , _______ , XXXXXXX ,                           XXXXXXX , _______ , KC_DEL  , XXXXXXX , XXXXXXX
     //           \---------+---------+---------+---------+---------|--------/       \--------|---------+---------+---------+---------+---------/
@@ -70,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * .------------------------------------------------------------.                         .-----------------------------------------------------------.
      * | Caps    |         |         |         |          |         |                         |         |         |         |         |         |         |
      * |---------+---------+---------+---------+----------+---------|                         |---------+---------+---------+---------+---------+---------|
-     * |         |         |         |         |          |         |                         |         |         |         |         |         |         |
+     * |         |         |         |         |          |         |                         |         | UCIS    |         |         |         |         |
      * |---------+---------+---------+---------+----------+---------|                         |---------+---------+---------+---------+---------+---------|
      * |         |         |         |         |          |         |----------.   ,----------| Left    | Down    | Up      | Right   |         |         |
      * |---------+---------+---------+---------+----------+---------|          |   |          |---------+---------+---------+---------+---------+---------|
@@ -83,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // .------------------------------------------------------------.                         .-----------------------------------------------------------.
          KC_CAPS , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  , XXXXXXX ,                           XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
     // |---------+---------+---------+---------+----------+---------|                         |---------+---------+---------+---------+---------+---------|
-         XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  , XXXXXXX ,                           XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
+         XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  , XXXXXXX ,                           XXXXXXX , KC_UCIS , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,
     // |---------+---------+---------+---------+----------+---------|                         |---------+---------+---------+---------+---------+---------|
          XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX  , XXXXXXX ,                           KC_LEFT , KC_DOWN , KC_UP   , KC_RGHT , XXXXXXX , XXXXXXX ,
     // |---------+---------+---------+---------+----------+---------|=========|     |=========|---------+---------+---------+---------+---------+---------|
@@ -217,6 +223,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             return false;
         }
 #endif
+#ifdef UCIS_ENABLE
+        case KC_UCIS: {
+            if (!record->event.pressed) {
+                ucis_start();
+            }
+            return false;
+        }
+#endif
     }
     return true;
 }
@@ -232,10 +246,4 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 #endif
 #ifdef RGBLIGHT_ENABLE
 #    include "rgb_matrix.c"
-#endif
-#ifdef TAP_DANCE_ENABLE
-#    include "tap_dance.c"
-#endif
-#ifdef UCIS_ENABLE
-#    include "ucis.c"
 #endif

@@ -1,7 +1,7 @@
 #pragma once
 
-// #define MASTER_LEFT
-#define MASTER_RIGHT
+#define MASTER_LEFT
+// #define MASTER_RIGHT
 
 #define CUSTOM_FONT
 #define CUSTOM_LAYER_READ
@@ -34,7 +34,7 @@
 #    define RGB_MATRIX_SAT_STEP 5
 #    define RGB_MATRIX_VAL_STEP 5
 #    define RGB_MATRIX_SPD_STEP 5
-#    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 150 // limits maximum brightness of LEDs to 150 out of 255. Higher may cause the controller to crash.
+#    define RGB_MATRIX_MAXIMUM_BRIGHTNESS 255 // limits maximum brightness of LEDs to 150 out of 255. Higher may cause the controller to crash.
 
 // Normal effects
 #    define ENABLE_RGB_MATRIX_SOLID_COLOR            // Static single hue no speed support
@@ -96,6 +96,7 @@
 #    define RGB_MATRIX_LED_FLUSH_LIMIT 16                               // limits in milliseconds how frequently an animation will update the LEDs. 16 (16ms) is equivalent to limiting to 60fps (increases keyboard responsiveness)
 #endif
 
-#ifdef UNICODE_ENABLE
+#ifdef UCIS_ENABLE
+#    define UCIS_MAX_CODE_POINTS 55
 #    define UNICODE_SELECTED_MODES UNICODE_MODE_LINUX
 #endif

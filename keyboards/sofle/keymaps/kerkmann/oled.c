@@ -35,7 +35,6 @@ static void print_status_narrow(void) {
     oled_write(get_u8_str(get_current_wpm(), '0'), false);
 
     oled_write_P(PSTR("\n\n\n\n\n\n\n\n\n\n\n"), false);
-    oled_write_P(PSTR("WPM: "), false);
 }
 
 static void print_settings_master(void) {
