@@ -1,0 +1,24 @@
+# Board
+BOOTLOADER = rp2040
+LTO_ENABLE = yes
+CONSOLE_ENABLE = no
+CONVERT_TO = rp2040_ce
+# Compiler
+SRC += feature_state.c
+# Hardware Features
+ENCODER_MAP_ENABLE = yes
+OLED_ENABLE = yes
+# Software Features
+AUTOCORRECT_ENABLE = yes
+AUTO_SHIFT_ENABLE = yes
+CAPS_WORD_ENABLE = yes
+COMBO_ENABLE = no
+COMMAND_ENABLE = no
+EXTRAKEY_ENABLE = yes
+KEY_LOCK_ENABLE = yes
+MOUSEKEY_ENABLE = yes
+SEND_STRING_ENABLE = yes
+TAP_DANCE_ENABLE = yes
+UCIS_ENABLE = no
+UNICODE_COMMON = no
+WPM_ENABLE = yes
